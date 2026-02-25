@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
 <title>Abhijeet Kulkarni — IoT Builder & Designer</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
 <style>
@@ -36,13 +36,14 @@
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   background:var(--bg); color:var(--s5);
   font-family:var(--sans); font-weight:400;
   line-height:1.65; overflow-x:hidden;
   cursor:none; -webkit-font-smoothing:antialiased;
   position:relative;
+  min-width:0;
 }
 
 /* ═══ BACKGROUND ANIMATIONS (full page) ═══ */
@@ -188,7 +189,7 @@ nav{
 #hero{min-height:100vh;padding-top:52px;display:flex;align-items:center;border-bottom:1px solid var(--b0);position:relative;overflow:hidden;}
 .hero-dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,var(--b0) 1px,transparent 1px);background-size:30px 30px;opacity:.55;mask-image:radial-gradient(ellipse 75% 75% at 55% 50%,black,transparent);}
 .hero-glow{position:absolute;top:-120px;right:-80px;width:520px;height:520px;pointer-events:none;background:radial-gradient(circle,rgba(14,165,233,.055) 0%,transparent 68%);}
-.hero-w{position:relative;z-index:2;width:100%;max-width:1140px;margin:0 auto;padding:0 2.2rem;display:grid;grid-template-columns:1fr 264px;gap:3rem;align-items:center;}
+.hero-w{position:relative;z-index:2;width:100%;max-width:1140px;margin:0 auto;padding:0 2.2rem;display:grid;grid-template-columns:1fr 264px;gap:3rem;align-items:center;min-width:0;}
 .hero-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:.66rem;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(14,165,233,.22);background:var(--blue-lo);padding:3px 10px;border-radius:var(--r);margin-bottom:20px;opacity:0;animation:fadeUp .55s .06s var(--out) forwards;}
 .chip-pip{width:5px;height:5px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite}
 .hero-name{font-size:clamp(2.8rem,5vw,4.2rem);font-weight:600;color:var(--s6);letter-spacing:-.035em;line-height:1.04;margin-bottom:8px;opacity:0;animation:fadeUp .55s .18s var(--out) forwards;}
@@ -219,7 +220,7 @@ nav{
 
 .sec{padding:5.5rem 0}
 .sec-alt{background:var(--surf)}
-.si{max-width:1140px;margin:0 auto;padding:0 2.2rem}
+.si{max-width:1140px;margin:0 auto;padding:0 2.2rem;min-width:0}
 .sec-ey{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.65rem;color:var(--blue);letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;}
 .sec-ey::before{content:'';width:16px;height:1px;background:var(--blue)}
 .sec-t{font-size:1.55rem;font-weight:600;color:var(--s6);letter-spacing:-.025em;line-height:1.2;margin-bottom:2.6rem;}
@@ -268,13 +269,23 @@ nav{
 .b-blue{color:var(--blue);border-color:rgba(14,165,233,.28);background:var(--blue-lo)}
 .b-green{color:var(--green);border-color:rgba(34,197,94,.22);background:rgba(34,197,94,.07)}
 .b-amber{color:var(--amber);border-color:rgba(245,158,11,.22);background:rgba(245,158,11,.07)}
-.proj-title{font-size:.98rem;font-weight:500;color:var(--s6);margin-bottom:7px;letter-spacing:-.01em}
-.proj-desc{font-size:.79rem;font-weight:300;color:var(--s4);line-height:1.78;margin-bottom:14px}
+.proj-title{font-size:.98rem;font-weight:500;color:var(--s6);margin-bottom:7px;letter-spacing:-.01em;word-wrap:break-word}
+.proj-desc{font-size:.79rem;font-weight:300;color:var(--s4);line-height:1.78;margin-bottom:14px;word-wrap:break-word}
 .proj-tags{display:flex;flex-wrap:wrap;gap:5px}
 .ptag{font-family:var(--mono);font-size:.58rem;letter-spacing:.05em;padding:2px 7px;border-radius:var(--r);border:1px solid var(--b0);color:var(--s3);transition:border-color .16s,color .16s;}
 .proj-card:hover .ptag{border-color:var(--b1);color:var(--s4)}
 .proj-card a.proj-link{font-size:.71rem;color:var(--blue);margin-top:8px;display:inline-block;}
 .proj-card img.proj-thumb{width:100%;height:140px;object-fit:cover;border-radius:var(--r);margin-bottom:12px;border:1px solid var(--b0);}
+.proj-lead{font-size:.95rem;font-weight:300;color:var(--s4);line-height:1.75;max-width:640px;margin-top:-1rem;margin-bottom:2.5rem;}
+.proj-grid-featured{display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;}
+.core-strength{grid-column:1/-1;background:linear-gradient(135deg,var(--card-hi) 0%,var(--card) 100%);border:1px solid rgba(14,165,233,.25);border-radius:var(--r);padding:2rem 2rem;margin-top:0.5rem;position:relative;overflow:hidden;}
+.core-strength::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--green));opacity:.8;}
+.core-strength p{font-size:1rem;font-weight:400;color:var(--s5);line-height:1.85;margin:0 0 1.25rem 0;}
+.core-strength .core-cta{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);font-weight:500;transition:gap .22s var(--spring),color .2s;}
+.core-strength .core-cta:hover{color:var(--s6);gap:12px;}
+@media(max-width:920px){.proj-grid-featured{grid-template-columns:1fr}}
+@media(max-width:768px){.li-grid{grid-template-columns:1fr}.s-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:540px){.proj-lead{font-size:.88rem;margin-bottom:1.75rem}.core-strength{padding:1.5rem 1.25rem}.core-strength p{font-size:.92rem}.proj-card{padding:16px 14px}.proj-title{font-size:.9rem}.proj-desc{font-size:.75rem}}
 
 .li-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .li-card{background:var(--card);border:1px solid var(--b0);border-radius:var(--r);padding:18px 16px;display:flex;flex-direction:column;transition:border-color .2s var(--smooth),transform .28s var(--spring);}
@@ -303,7 +314,7 @@ nav{
 .info-r a{color:var(--s4);transition:color .18s}
 .info-r a:hover{color:var(--blue)}
 
-.f-shell{background:var(--panel);border:1px solid var(--b0);border-radius:var(--r);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.3);}
+.f-shell{background:var(--panel);border:1px solid var(--b0);border-radius:var(--r);overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.3);max-width:100%;}
 .f-bar{padding:9px 13px;border-bottom:1px solid var(--b0);background:var(--card);display:flex;align-items:center;justify-content:space-between;}
 .f-dots{display:flex;gap:5px}
 .fd{width:9px;height:9px;border-radius:50%}
@@ -466,10 +477,10 @@ body:active #cd{transform:translate(-50%,-50%) scale(0.85)}
 .nav-ham.open span:nth-child(2){opacity:0}
 .nav-ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 @media(max-width:920px){
-  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(7,9,13,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--b0);flex-direction:column;padding:12px;gap:4px;}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:rgba(7,9,13,.98);backdrop-filter:blur(20px);border-bottom:1px solid var(--b0);flex-direction:column;padding:12px max(12px,env(safe-area-inset-right)) 12px max(12px,env(safe-area-inset-left));gap:4px;}
   .nav-links.open{display:flex}
-  .nav-links .na{padding:10px 12px;border-radius:var(--r);}
-  .nav-ham{display:flex}
+  .nav-links .na{padding:12px 14px;border-radius:var(--r);min-height:44px;display:flex;align-items:center;}
+  .nav-ham{display:flex;min-width:44px;min-height:44px;align-items:center;justify-content:center;}
   .nav-w{position:relative}
 }
 @media(min-width:921px){.nav-links.open{display:flex}}
@@ -506,6 +517,38 @@ body:active #cd{transform:translate(-50%,-50%) scale(0.85)}
 .chat-input-wrap input:focus{border-color:var(--blue)}
 .chat-input-wrap button{padding:8px 14px;background:var(--blue);color:#fff;border:none;border-radius:var(--r);font-size:.7rem;cursor:pointer;font-family:var(--mono);letter-spacing:.05em}
 @media(max-width:540px){.chat-fab{bottom:16px;right:16px}.chat-drawer{right:16px;bottom:80px;width:calc(100vw - 32px)}}
+
+/* ═══ iPhone / small portrait (e.g. iPhone 13 = 390px) ═══ */
+@media(max-width:430px){
+  .nav-w,.hero-w,.si,.foot-w{padding-left:1rem;padding-right:1rem}
+  .logo{min-width:0}
+  #logoName{font-size:.65rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+  .pip-wrap{font-size:.58rem;flex-shrink:0}
+  .hero-name{font-size:clamp(1.85rem,8vw,2.5rem)}
+  .hero-name-sub{font-size:.9rem}
+  .hero-bio{font-size:.85rem}
+  .sec{padding:3.5rem 0}
+  .sk-grid{grid-template-columns:1fr;gap:8px}
+  .proj-grid,.li-grid{grid-template-columns:1fr}
+  .about-g,.conn-g{gap:1.5rem}
+  .fg-row{grid-template-columns:1fr}
+  .foot-w{flex-direction:column;gap:8px;text-align:center}
+  .chat-fab{bottom:max(16px,env(safe-area-inset-bottom));right:max(16px,env(safe-area-inset-right))}
+  .chat-drawer{right:max(16px,env(safe-area-inset-right));bottom:max(80px,calc(56px + env(safe-area-inset-bottom)));width:calc(100vw - 2rem);max-height:60vh}
+  .fi,.fta,.fsel{font-size:16px}
+}
+@media(max-width:360px){
+  .nav-w,.hero-w,.si,.foot-w{padding-left:0.75rem;padding-right:0.75rem}
+  #logoName{max-width:90px}
+  .sec{padding:2.5rem 0}
+  .sec-t{font-size:1.35rem}
+  .core-strength{padding:1.25rem 1rem}
+}
+nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+.avail-strip{padding-left:max(1rem,env(safe-area-inset-left));padding-right:max(1rem,env(safe-area-inset-right))}
+.main-content{min-width:0}
+.si,.nav-w,.hero-w,.foot-w{max-width:100%}
+.proj-card,.li-card,.sk-card,.s-card,.c-row,.f-shell,.core-strength{min-width:0}
 </style>
 </head>
 <body>
@@ -693,40 +736,65 @@ body:active #cd{transform:translate(-50%,-50%) scale(0.85)}
 
 <section id="projects" class="sec sec-alt">
   <div class="si">
-    <div style="margin-bottom:2.5rem" class="rv">
+    <div class="rv">
       <div class="sec-ey">Projects</div>
       <h2 class="sec-t">Things I've Built</h2>
+      <p class="proj-lead">From emotion-connected devices to startup systems — real work I've shipped. Built to attract the right clients and partners.</p>
     </div>
-    <div class="proj-grid" id="projGrid">
+    <div class="proj-grid proj-grid-featured" id="projGrid">
       <div class="proj-card rv" data-d="1">
         <div class="proj-arrow">↗</div>
         <div class="proj-num">01 //</div>
-        <div class="proj-badge"><span class="badge b-blue">IoT Concept</span></div>
-        <h3 class="proj-title">VibeLink</h3>
-        <p class="proj-desc">An emotion-based IoT device for silent ambient communication. Translates emotional states into haptic and light signals — connecting people through feel, not words.</p>
+        <span class="badge b-blue">IoT · Emotional design</span>
+        <h3 class="proj-title">VibeLink — Emotion-Connected IoT Device</h3>
+        <p class="proj-desc">A deeply personal IoT project designed to strengthen emotional connection across distance. Built using ESP32 microcontrollers, custom firmware, and wireless communication architecture, the device enables real-time tactile feedback between connected units. Each device integrates battery management, vibration modules, and Wi‑Fi-based signaling to create a simple yet meaningful human interaction system. This project represents the fusion of embedded systems engineering with emotional design thinking.</p>
         <div class="proj-tags">
-          <span class="ptag">ESP32</span><span class="ptag">BLE</span><span class="ptag">Haptics</span><span class="ptag">Firmware</span>
+          <span class="ptag">ESP32</span><span class="ptag">Firmware</span><span class="ptag">Wireless</span><span class="ptag">Haptics</span>
         </div>
       </div>
       <div class="proj-card rv" data-d="2">
         <div class="proj-arrow">↗</div>
         <div class="proj-num">02 //</div>
-        <div class="proj-badge"><span class="badge b-green">Startup</span></div>
-        <h3 class="proj-title">WorkKit</h3>
-        <p class="proj-desc">Startup tools and systems platform — a curated toolkit giving early-stage founders the operational backbone they need. SOPs, templates, and systems from day zero.</p>
+        <span class="badge b-green">Automation · Control</span>
+        <h3 class="proj-title">Smart IoT Control Systems</h3>
+        <p class="proj-desc">Designed and developed multiple ESP32-based control systems for automation and device monitoring. These systems include real-time switching, sensor integration, remote control interfaces, and optimized power management. Focused on reliability, low-latency communication, and modular firmware architecture for scalable deployment.</p>
         <div class="proj-tags">
-          <span class="ptag">SaaS</span><span class="ptag">Startup Ops</span><span class="ptag">Strategy</span>
+          <span class="ptag">ESP32</span><span class="ptag">Sensors</span><span class="ptag">Remote control</span>
         </div>
       </div>
       <div class="proj-card rv" data-d="3">
         <div class="proj-arrow">↗</div>
         <div class="proj-num">03 //</div>
-        <div class="proj-badge"><span class="badge b-amber">Hardware</span></div>
-        <h3 class="proj-title">Embedded Automation</h3>
-        <p class="proj-desc">Series of automation builds using Arduino and microcontrollers — relay-based switches, sensor-driven alerts, and serial comms between embedded nodes.</p>
+        <span class="badge b-amber">Hardware · Prototyping</span>
+        <h3 class="proj-title">Embedded Systems & Hardware Prototyping</h3>
+        <p class="proj-desc">Hands-on experience building hardware prototypes involving stepper motors, rotary encoders, SMPS units, and wireless modules. Developed structured firmware logic for performance optimization, non-blocking execution, and production-ready system design. Strong understanding of hardware-software integration and practical deployment challenges.</p>
         <div class="proj-tags">
-          <span class="ptag">Arduino</span><span class="ptag">C/C++</span><span class="ptag">Sensors</span><span class="ptag">Relay</span>
+          <span class="ptag">Stepper</span><span class="ptag">Encoders</span><span class="ptag">Firmware</span>
         </div>
+      </div>
+      <div class="proj-card rv" data-d="4">
+        <div class="proj-arrow">↗</div>
+        <div class="proj-num">04 //</div>
+        <span class="badge b-green">Startup · Platform</span>
+        <h3 class="proj-title">WorkKit — Startup Systems Platform</h3>
+        <p class="proj-desc">A productivity-focused platform concept designed to help founders, freelancers, and creators simplify operations. The goal is to combine structured workflows, smart tools, and practical frameworks into a clean, scalable digital system. The project blends technical execution with startup strategy thinking.</p>
+        <div class="proj-tags">
+          <span class="ptag">Productivity</span><span class="ptag">Founders</span><span class="ptag">Systems</span>
+        </div>
+      </div>
+      <div class="proj-card rv" data-d="5">
+        <div class="proj-arrow">↗</div>
+        <div class="proj-num">05 //</div>
+        <span class="badge b-blue">Automation · Events</span>
+        <h3 class="proj-title">Custom Automation & Event Control Solutions</h3>
+        <p class="proj-desc">Developed custom automation concepts tailored for real-world use cases including event control systems and smart device orchestration. Focused on system stability, efficiency, and user-centric design.</p>
+        <div class="proj-tags">
+          <span class="ptag">Automation</span><span class="ptag">Events</span><span class="ptag">Orchestration</span>
+        </div>
+      </div>
+      <div class="core-strength rv" data-d="6">
+        <p><strong>Core strength.</strong> I specialize in turning ideas into functional systems — combining embedded engineering, automation logic, and startup-driven product thinking to build scalable, real-world technology solutions.</p>
+        <a href="#connect" class="core-cta">Let's build something →</a>
       </div>
     </div>
   </div>
