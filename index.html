@@ -902,40 +902,6 @@ body:active #cd{transform:translate(-50%,-50%) scale(0.85)}
 </div>
 
 <script>
-// ——— Settings (logo, availability, tagline, status) ———
-(function(){
-  fetch('/api/settings').then(r=>r.json()).then(data=>{
-    if(!data.success||!data.settings) return;
-    const s=data.settings;
-    if(s.logoUrl){
-      var img=document.getElementById('logoImg');
-      var txt=document.getElementById('logoText');
-      if(img&&txt){ img.src=s.logoUrl; img.style.display='block'; txt.style.display='none'; }
-    }
-    var tagline=document.getElementById('heroTagline');
-    if(tagline&&s.heroTagline) tagline.textContent=s.heroTagline;
-    var statusText=document.getElementById('statusText');
-    if(statusText){
-      if(s.status==='available') statusText.textContent='Available';
-      else if(s.status==='busy') statusText.textContent='Busy';
-      else if(s.status==='away') statusText.textContent='Away';
-      else statusText.textContent=s.statusMessage||'Available';
-    }
-    var strip=document.getElementById('availStrip');
-    if(strip&&s.availableFor){
-      var parts=[];
-      if(s.availableFor.freelance) parts.push('Freelance');
-      if(s.availableFor.collaboration) parts.push('Collaboration');
-      if(s.availableFor.mentorship) parts.push('Mentorship');
-      if(parts.length){
-        strip.innerHTML='<strong>Available for</strong> '+parts.join(' · ');
-        strip.style.display='block';
-        document.querySelector('.main-content').classList.add('has-strip');
-      }
-    }
-  }).catch(function(){});
-})();
-
 // ——— Hamburger nav ———
 var navHam=document.getElementById('navHam');
 var navLinks=document.getElementById('navLinks');
@@ -1033,54 +999,15 @@ document.querySelectorAll('.btn,.btn-send').forEach(btn=>{
   });
 });
 
-function escapeHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-
-// Projects: only replace grid when API returns works; otherwise keep default cards (VibeLink, WorkKit, etc.)
-fetch('/api/works').then(r=>r.json()).then(data=>{
-  if(!data.success||!data.works||data.works.length===0) return;
-  const grid=document.getElementById('projGrid');
-  if(!grid) return;
-  const cards=data.works.map((w,i)=>{
-    const num=String(i+1).padStart(2,'0');
-    const thumb=w.image ? '<img class="proj-thumb" src="'+escapeHtml(w.image)+'" alt="">' : '';
-    const linkBtn=w.link ? '<a href="'+escapeHtml(w.link)+'" target="_blank" rel="noopener" class="proj-link">View →</a>' : '';
-    const tags=(w.tags&&w.tags.length) ? '<div class="proj-tags">'+w.tags.map(t=>'<span class="ptag">'+escapeHtml(t)+'</span>').join('')+'</div>' : '';
-    return '<div class="proj-card rv" data-d="'+(i+1)+'">'+thumb+'<div class="proj-arrow">↗</div><div class="proj-num">'+num+' //</div><span class="badge b-blue">'+escapeHtml(w.category||'Project')+'</span><h3 class="proj-title">'+escapeHtml(w.title)+'</h3><p class="proj-desc">'+escapeHtml(w.description)+'</p>'+tags+linkBtn+'</div>';
-  }).join('');
-  grid.innerHTML=cards;
-  document.querySelectorAll('#projGrid .proj-card').forEach(el=>rvO.observe(el));
-}).catch(function(){ /* keep default project cards on error */ });
-
-document.getElementById('cForm').addEventListener('submit',async function(e){
+document.getElementById('cForm').addEventListener('submit',function(e){
   e.preventDefault();
-  const btn=document.getElementById('sendBtn');
-  const msg=document.getElementById('fmsg');
-  btn.disabled=true; btn.textContent='Sending...';
-  msg.className='fmsg';
   const fn=this.firstName.value, ln=this.lastName.value, email=this.email.value, phone=this.phone.value||'', intent=this.intent.value, message=this.message.value;
-  try {
-    const res=await fetch('/api/contact',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({firstName:fn,lastName:ln,name:fn+' '+ln,email,phone,intent,message})
-    });
-    const data=await res.json();
-    if(res.ok&&data.success){
-      msg.className='fmsg ok';
-      msg.textContent='✓ '+ (data.message||"Message sent — I'll reply within 24 hours.");
-      this.reset();
-    } else {
-      msg.className='fmsg err';
-      msg.textContent=data.error||'Something went wrong. Try again or email directly.';
-    }
-  } catch(err) {
-    msg.className='fmsg err';
-    msg.textContent='Connection error. Opening your mail app instead.';
-    const sub=encodeURIComponent('Connect Request — '+fn+' '+ln);
-    const body=encodeURIComponent('Name: '+fn+' '+ln+'\nEmail: '+email+'\nPhone: '+phone+'\nIntent: '+intent+'\n\nMessage:\n'+message);
-    window.location.href='mailto:abhijeetsspace@gmail.com?subject='+sub+'&body='+body;
-  }
-  btn.disabled=false; btn.textContent='Send Message →';
+  const sub=encodeURIComponent('Connect Request — '+fn+' '+ln);
+  const body=encodeURIComponent('Name: '+fn+' '+ln+'\nEmail: '+email+'\nPhone: '+phone+'\nIntent: '+intent+'\n\nMessage:\n'+message);
+  window.location.href='mailto:abhijeetsspace@gmail.com?subject='+sub+'&body='+body;
+  const msg=document.getElementById('fmsg');
+  msg.className='fmsg ok';
+  msg.textContent="Opening your email app — I'll reply within 24 hours.";
 });
 
 // ——— Chat widget (rule-based replies) ———
