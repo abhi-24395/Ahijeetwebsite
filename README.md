@@ -4,11 +4,12 @@ A clean, minimal single-page personal website built with Node.js and Express.
 
 ## Features
 
-- Single-page scrolling website
-- Clean, professional design
-- Responsive layout
-- Backend API structure for future extensibility
-- Contact form endpoint (ready for integration)
+- Single-page portfolio (about, skills, projects, connect)
+- Admin panel: site settings (status, availability, logo, tagline), add/remove works
+- Live settings: status and “available for” (freelance, collaboration, mentorship) from admin
+- Chat widget (“Ask Abhijeet”) with rule-based replies
+- Contact form and public API for works and settings
+- Responsive layout and hamburger nav on mobile
 
 ## Tech Stack
 
@@ -65,16 +66,27 @@ The website will be available at `http://localhost:3000`
 - `GET /api/health` - Health check endpoint
 - `POST /api/contact` - Contact form submission (ready for integration)
 
-## Deployment
+## Deployment (make it live)
 
-The website can be deployed to any Node.js hosting platform:
-- Heroku
-- Railway
-- Render
-- Vercel (with serverless functions)
-- DigitalOcean App Platform
+### Deploy to Render (free, ~2 min)
 
-Make sure to set the `PORT` environment variable if required by your hosting platform.
+1. Push this repo to GitHub (you already have [abhi-24395/Ahijeetwebsite](https://github.com/abhi-24395/Ahijeetwebsite)).
+2. Go to **[render.com](https://render.com)** → Sign up / Log in (GitHub is fine).
+3. **New** → **Blueprint** → connect your GitHub account and select the repo **Ahijeetwebsite**.
+4. Render will read `render.yaml`: it will run `npm install` and `npm start`. Click **Apply**.
+5. Wait for the first deploy to finish. Your site will be at `https://ahijeet-website.onrender.com` (or the name you see in the dashboard).
+6. **Admin:** open `https://your-app.onrender.com/admin` → Login. Default credentials are in [ADMIN_PANEL.md](ADMIN_PANEL.md). Change the password after first login if you want.
+
+**Note:** On Render’s free tier the app may sleep after inactivity; the first visit after that can take a few seconds to wake up.
+
+**Optional:** In Render dashboard → your service → **Environment**, add `SESSION_SECRET` with a long random string (or leave the one Render generated).
+
+### Other hosts
+
+- **Railway:** Connect repo → set start command `npm start`.
+- **Vercel / Netlify:** This app needs a Node server; use Render or Railway for the simplest deploy.
+
+Set `PORT` if the host provides it (Render and Railway do automatically).
 
 ## License
 

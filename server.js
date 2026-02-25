@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs').promises;
 const session = require('express-session');
 require('dotenv').config();
 
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 const indexRoutes = require('./routes/index');
 const apiRoutes = require('./routes/api');
 const adminRoutes = require('./routes/admin');
+const initDataFiles = adminRoutes.initDataFiles;
 
 // Middleware
 app.use(express.json());
@@ -46,9 +48,19 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong!');
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-    console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-});
+// Ensure data and uploads dirs exist, then start server
+async function start() {
+    try {
+        await fs.mkdir(path.join(__dirname, 'data'), { recursive: true });
+        await fs.mkdir(path.join(__dirname, 'public', 'uploads'), { recursive: true });
+        if (typeof initDataFiles === 'function') await initDataFiles();
+    } catch (err) {
+        console.error('Startup init:', err.message);
+    }
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+        console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    });
+}
+start();
 

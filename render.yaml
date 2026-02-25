@@ -1,0 +1,13 @@
+# Render Blueprint - deploy from GitHub in one click
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: ahijeet-website
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true

@@ -376,4 +376,5 @@ router.delete('/works/:id', requireAuth, async (req, res) => {
 });
 
 module.exports = router;
+module.exports.initDataFiles = initDataFiles;
 
