@@ -104,15 +104,43 @@ body{
   overflow-x:hidden;
 }
 
-/* ═══ BACKGROUND — Subtle gradient mesh (reduced visual noise) ═══ */
+/* ═══ BACKGROUND — Space theme + subtle grid ═══ */
 .bg-wrap{
   position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+/* Base: deep space gradient */
+.bg-wrap::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 120% 80% at 50% 20%,rgba(59,130,246,.06) 0%,transparent 50%),
+    radial-gradient(ellipse 80% 120% at 80% 80%,rgba(16,185,129,.04) 0%,transparent 45%),
+    radial-gradient(ellipse 60% 60% at 20% 70%,rgba(59,130,246,.03) 0%,transparent 50%);
+}
+/* Starfield: small dots */
+.bg-stars{
+  position:absolute;inset:0;
+  background-image:
+    radial-gradient(1px 1px at 10% 15%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1px 1px at 25% 8%,rgba(255,255,255,.35),transparent),
+    radial-gradient(1.5px 1.5px at 40% 22%,rgba(255,255,255,.3),transparent),
+    radial-gradient(1px 1px at 55% 12%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1px 1px at 70% 18%,rgba(255,255,255,.25),transparent),
+    radial-gradient(1px 1px at 85% 10%,rgba(255,255,255,.35),transparent),
+    radial-gradient(1px 1px at 15% 45%,rgba(255,255,255,.2),transparent),
+    radial-gradient(1px 1px at 90% 55%,rgba(255,255,255,.25),transparent),
+    radial-gradient(1px 1px at 5% 75%,rgba(255,255,255,.3),transparent),
+    radial-gradient(1px 1px at 75% 88%,rgba(255,255,255,.2),transparent),
+    radial-gradient(1px 1px at 50% 95%,rgba(255,255,255,.35),transparent);
+  background-size:100% 100%;
+  animation:bgStarsTwinkle 8s ease-in-out infinite;
+}
+@keyframes bgStarsTwinkle{
+  0%,100%{opacity:1} 50%{opacity:0.7}
 }
 .bg-grid{
   position:absolute;inset:-20%;width:140%;height:140%;
   background-image:
-    linear-gradient(rgba(59,130,246,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(59,130,246,.04) 1px,transparent 1px);
+    linear-gradient(rgba(59,130,246,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(59,130,246,.035) 1px,transparent 1px);
   background-size:48px 48px;
   animation:bgGridMove 60s linear infinite;
 }
@@ -120,14 +148,14 @@ body{
 .bg-glow-1{
   position:absolute;width:80vmin;height:80vmin;max-width:600px;max-height:600px;
   border-radius:50%;
-  background:radial-gradient(circle at 30% 20%,rgba(59,130,246,.08) 0%,transparent 55%);
+  background:radial-gradient(circle at 30% 20%,rgba(59,130,246,.1) 0%,transparent 55%);
   top:-20%;right:-10%;
   animation:bgGlow 12s ease-in-out infinite alternate;
 }
 .bg-glow-2{
   position:absolute;width:60vmin;height:60vmin;max-width:400px;max-height:400px;
   border-radius:50%;
-  background:radial-gradient(circle at 70% 80%,rgba(16,185,129,.05) 0%,transparent 55%);
+  background:radial-gradient(circle at 70% 80%,rgba(16,185,129,.06) 0%,transparent 55%);
   bottom:-15%;left:-5%;
   animation:bgGlow 14s ease-in-out infinite alternate reverse;
   animation-delay:-3s;
@@ -141,60 +169,22 @@ body{
   0%,100%{opacity:0.85;transform:scale(1)}
   50%{opacity:1;transform:scale(1.05)}
 }
-/* ═══ Background logo — large AK mark (matches nav logo) ═══ */
+/* Background logo — circular AK (matches hero/nav) */
 .bg-logo{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:min(75vmin,580px);
-  height:min(75vmin,580px);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:none;
-  user-select:none;
-  z-index:1;
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(70vmin,520px);height:min(70vmin,520px);
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;user-select:none;z-index:1;
 }
-.bg-logo-inner{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation:bgLogoFloat 18s ease-in-out infinite;
-}
-.bg-logo-frame{
-  width:72%;
-  height:72%;
-  max-width:420px;
-  max-height:420px;
-  border:3px solid rgba(59,130,246,.2);
-  border-radius:24px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:rgba(59,130,246,.03);
-  animation:bgLogoPulse 5s ease-in-out infinite;
-  transform-origin:center;
-}
-.bg-logo-mark{
-  font-family:var(--font-display);
-  font-size:min(22vw,14rem);
-  font-weight:700;
-  letter-spacing:-0.12em;
-  color:var(--primary);
-  line-height:1;
-  opacity:0.12;
+.bg-logo img{
+  width:100%;height:100%;object-fit:contain;
+  opacity:0.08;
+  animation:bgLogoFloat 20s ease-in-out infinite;
 }
 @keyframes bgLogoFloat{
   0%,100%{transform:translate(0,0) rotate(0deg);}
-  33%{transform:translate(1.5%,-1%) rotate(0.8deg);}
-  66%{transform:translate(-1%,1.5%) rotate(-0.6deg);}
-}
-@keyframes bgLogoPulse{
-  0%,100%{opacity:1;transform:scale(1);border-color:rgba(59,130,246,.18);}
-  50%{opacity:1;transform:scale(1.04);border-color:rgba(59,130,246,.28);}
+  33%{transform:translate(1%,-1%) rotate(0.5deg);}
+  66%{transform:translate(-1%,1%) rotate(-0.5deg);}
 }
 .main-content{position:relative;z-index:1}
 a{text-decoration:none;color:inherit}
@@ -379,6 +369,25 @@ nav{
   .proj-grid-featured{gap:var(--space-4);}
   .core-strength{padding:var(--space-5) var(--space-4);}
   .fg-row{grid-template-columns:1fr;}
+  /* Connect section — mobile */
+  #connect .si{padding-left:var(--space-4);padding-right:var(--space-4);}
+  .conn-g{grid-template-columns:1fr;gap:var(--space-8);text-align:center;}
+  .conn-left p{text-align:center;margin-bottom:var(--space-5);}
+  .info-list{gap:var(--space-4);align-items:center;}
+  .info-r{flex-wrap:wrap;justify-content:center;gap:var(--space-2);min-height:44px;padding:var(--space-2) 0;}
+  .info-r a{word-break:break-word;text-align:center;}
+  .f-shell{min-width:0;}
+  .f-body{padding:var(--space-4);}
+  .f-bar{padding:var(--space-2) var(--space-4);}
+  .fg-row{margin-bottom:var(--space-4);}
+  .fg{margin-bottom:var(--space-4);}
+  .btn-send{min-height:48px;padding:var(--space-3) var(--space-4);}
+  /* Footer — mobile */
+  footer{padding:var(--space-6) var(--space-4);}
+  .foot-w{flex-direction:column;align-items:center;text-align:center;gap:var(--space-5);}
+  .foot-l{font-size:var(--text-xs);line-height:1.6;max-width:100%;}
+  .foot-links{flex-wrap:wrap;justify-content:center;gap:var(--space-3);}
+  .foot-a{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 var(--space-2);}
 }
 @media(max-width:540px){
   .proj-lead{font-size:var(--text-sm);margin-bottom:var(--space-6);}
@@ -513,8 +522,8 @@ footer{padding:var(--space-8) 0;border-top:1px solid var(--border);background:va
   .rv{transition:opacity .3s;}
   .bg-wrap .bg-grid,.bg-grid-fine,.bg-dots,.bg-scan,.bg-particle{animation:none!important;}
   .bg-glow-1,.bg-glow-2,.bg-glow-3{animation:none!important;}
-  .bg-logo-inner,.bg-logo-frame{animation:none!important;}
-  .bg-logo-frame{border-color:rgba(59,130,246,.2);}
+  .bg-logo img{animation:none!important;}
+  .bg-stars{animation:none!important;}
 }
 
 /* ═══ AVAILABILITY STRIP (from settings) ═══ */
@@ -595,11 +604,14 @@ footer{padding:var(--space-8) 0;border-top:1px solid var(--border);background:va
   .proj-grid{grid-template-columns:1fr}
   .about-g,.conn-g{gap:1.5rem}
   .fg-row{grid-template-columns:1fr}
-  .foot-w{flex-direction:column;gap:8px;text-align:center}
+  .foot-w{flex-direction:column;align-items:center;gap:var(--space-4);text-align:center}
+  .foot-l{font-size:.7rem;line-height:1.5}
+  .foot-links{gap:var(--space-2)}
+  .f-body{padding:var(--space-3) var(--space-4)}
+  .conn-left .sec-t{font-size:var(--text-lg)}
   .chat-fab{bottom:max(16px,env(safe-area-inset-bottom));right:max(16px,env(safe-area-inset-right))}
   .chat-drawer{right:max(16px,env(safe-area-inset-right));bottom:max(80px,calc(56px + env(safe-area-inset-bottom)));width:calc(100vw - 2rem);max-height:60vh}
   .fi,.fta,.fsel{font-size:16px}
-  .bg-logo-mark{font-size:min(26vw,10rem);}
 }
 @media(max-width:360px){
   .nav-w,.hero-w,.si,.foot-w{padding-left:var(--space-3);padding-right:var(--space-3);}
@@ -607,8 +619,7 @@ footer{padding:var(--space-8) 0;border-top:1px solid var(--border);background:va
   .sec{padding:var(--space-10) 0;}
   .sec-t{font-size:var(--text-lg);}
   .core-strength{padding:var(--space-4) var(--space-3);}
-  .bg-logo-frame{width:80%;height:80%;}
-  .bg-logo-mark{font-size:28vw;}
+  .bg-logo{width:min(65vmin,400px);height:min(65vmin,400px);}
 }
 /* Large screens (1920+) — cap max width for readability */
 @media(min-width:1920px){
@@ -624,7 +635,8 @@ nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-rig
 <body>
 
 <div class="bg-wrap">
-  <div class="bg-logo" aria-hidden="true"><span class="bg-logo-inner"><span class="bg-logo-frame"><span class="bg-logo-mark">AK</span></span></span></div>
+  <div class="bg-stars" aria-hidden="true"></div>
+  <div class="bg-logo" aria-hidden="true"><img src="logo.svg" alt=""/></div>
   <div class="bg-grid"></div>
   <div class="bg-grid-fine"></div>
   <div class="bg-glow-1"></div>
