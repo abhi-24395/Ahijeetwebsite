@@ -169,23 +169,6 @@ body{
   0%,100%{opacity:0.85;transform:scale(1)}
   50%{opacity:1;transform:scale(1.05)}
 }
-/* Background logo — circular AK (matches hero/nav) */
-.bg-logo{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:min(70vmin,520px);height:min(70vmin,520px);
-  display:flex;align-items:center;justify-content:center;
-  pointer-events:none;user-select:none;z-index:1;
-}
-.bg-logo img{
-  width:100%;height:100%;object-fit:contain;
-  opacity:0.08;
-  animation:bgLogoFloat 20s ease-in-out infinite;
-}
-@keyframes bgLogoFloat{
-  0%,100%{transform:translate(0,0) rotate(0deg);}
-  33%{transform:translate(1%,-1%) rotate(0.5deg);}
-  66%{transform:translate(-1%,1%) rotate(-0.5deg);}
-}
 .main-content{position:relative;z-index:1}
 a{text-decoration:none;color:inherit}
 a:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
@@ -222,8 +205,6 @@ nav{
 @keyframes heroGlow{0%{opacity:.8;transform:scale(1)}100%{opacity:1;transform:scale(1.1)}}
 .hero-w{position:relative;z-index:2;width:100%;max-width:1140px;margin:0 auto;padding:0 var(--space-6);display:grid;grid-template-columns:1fr 280px;gap:var(--space-12);align-items:center;min-width:0;}
 .hero-right{display:flex;flex-direction:column;align-items:center;gap:var(--space-6);}
-.hero-logo-wrap{display:flex;align-items:center;justify-content:center;}
-.hero-logo{width:100%;max-width:min(240px,50vw);height:auto;display:block;opacity:0;animation:fadeUp .5s .35s var(--out) forwards;}
 .logo-sq .logo-img{display:block;width:32px;height:32px;border-radius:50%;}
 .logo-sq:has(.logo-img){border:none;background:transparent;padding:0;}
 .logo:hover .logo-sq:has(.logo-img){background:transparent;border:none;box-shadow:none;}
@@ -522,7 +503,6 @@ footer{padding:var(--space-8) 0;border-top:1px solid var(--border);background:va
   .rv{transition:opacity .3s;}
   .bg-wrap .bg-grid,.bg-grid-fine,.bg-dots,.bg-scan,.bg-particle{animation:none!important;}
   .bg-glow-1,.bg-glow-2,.bg-glow-3{animation:none!important;}
-  .bg-logo img{animation:none!important;}
   .bg-stars{animation:none!important;}
 }
 
@@ -619,7 +599,6 @@ footer{padding:var(--space-8) 0;border-top:1px solid var(--border);background:va
   .sec{padding:var(--space-10) 0;}
   .sec-t{font-size:var(--text-lg);}
   .core-strength{padding:var(--space-4) var(--space-3);}
-  .bg-logo{width:min(65vmin,400px);height:min(65vmin,400px);}
 }
 /* Large screens (1920+) — cap max width for readability */
 @media(min-width:1920px){
@@ -636,7 +615,6 @@ nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-rig
 
 <div class="bg-wrap">
   <div class="bg-stars" aria-hidden="true"></div>
-  <div class="bg-logo" aria-hidden="true"><img src="logo.svg" alt=""/></div>
   <div class="bg-grid"></div>
   <div class="bg-grid-fine"></div>
   <div class="bg-glow-1"></div>
@@ -694,9 +672,6 @@ nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-rig
       </div>
     </div>
     <div class="hero-right">
-      <div class="hero-logo-wrap" aria-hidden="true">
-        <img src="logo.svg" alt="" class="hero-logo" width="240" height="240"/>
-      </div>
     <div class="sys-card">
       <div class="sys-head">
         <span class="sys-h-title">sys.profile</span>
@@ -921,7 +896,8 @@ nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-rig
           <span class="f-title">request_connect.form</span>
         </div>
         <div class="f-body">
-          <form id="cForm" autocomplete="off">
+          <!-- Replace YOUR_FORMSPREE_ID with your form ID from https://formspree.io (free signup) -->
+          <form id="cForm" autocomplete="off" data-formspree-id="YOUR_FORMSPREE_ID">
             <div class="fg-row">
               <div class="fg">
                 <label class="fl">First Name</label>
@@ -1079,15 +1055,53 @@ document.querySelectorAll('.btn,.btn-send').forEach(btn=>{
   });
 });
 
-document.getElementById('cForm').addEventListener('submit',function(e){
+document.getElementById('cForm').addEventListener('submit',async function(e){
   e.preventDefault();
-  const fn=this.firstName.value, ln=this.lastName.value, email=this.email.value, phone=this.phone.value||'', intent=this.intent.value, message=this.message.value;
-  const sub=encodeURIComponent('Connect Request — '+fn+' '+ln);
-  const body=encodeURIComponent('Name: '+fn+' '+ln+'\nEmail: '+email+'\nPhone: '+phone+'\nIntent: '+intent+'\n\nMessage:\n'+message);
-  window.location.href='mailto:abhijeetsspace@gmail.com?subject='+sub+'&body='+body;
-  const msg=document.getElementById('fmsg');
-  msg.className='fmsg ok';
-  msg.textContent="Opening your email app — I'll reply within 24 hours.";
+  var form=this;
+  var msgEl=document.getElementById('fmsg');
+  var btn=document.getElementById('sendBtn');
+  var formId=(form.getAttribute('data-formspree-id')||'').trim();
+  if(!formId||formId==='YOUR_FORMSPREE_ID'){
+    msgEl.className='fmsg err';
+    msgEl.textContent='Form not configured. Add your Formspree form ID to the form (data-formspree-id). Get one free at formspree.io';
+    return;
+  }
+  msgEl.className='';
+  msgEl.textContent='';
+  msgEl.style.display='none';
+  btn.disabled=true;
+  btn.textContent='Sending…';
+  try{
+    var res=await fetch('https://formspree.io/f/'+formId,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        _replyto:form.email.value,
+        firstName:form.firstName.value,
+        lastName:form.lastName.value,
+        email:form.email.value,
+        phone:form.phone.value||'',
+        intent:form.intent.value,
+        message:form.message.value
+      })
+    });
+    msgEl.style.display='block';
+    if(res.ok){
+      msgEl.className='fmsg ok';
+      msgEl.textContent="Message sent. I'll reply within 24 hours.";
+      form.reset();
+    }else{
+      msgEl.className='fmsg err';
+      var data=await res.json().catch(function(){return {};});
+      msgEl.textContent=(data.error||data.errors?.[0]?.message)||'Something went wrong. Try again or email abhijeetsspace@gmail.com.';
+    }
+  }catch(err){
+    msgEl.style.display='block';
+    msgEl.className='fmsg err';
+    msgEl.textContent='Could not send. Check your connection or email abhijeetsspace@gmail.com.';
+  }
+  btn.disabled=false;
+  btn.textContent='Send Message →';
 });
 
 // ——— Chat widget (rule-based replies) ———
