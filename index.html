@@ -897,7 +897,7 @@ nav{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-rig
         </div>
         <div class="f-body">
           <!-- Replace YOUR_FORMSPREE_ID with your form ID from https://formspree.io (free signup) -->
-          <form id="cForm" autocomplete="off" data-formspree-id="YOUR_FORMSPREE_ID">
+          <form id="cForm" autocomplete="off" data-formspree-id="xlgwvken">
             <div class="fg-row">
               <div class="fg">
                 <label class="fl">First Name</label>
@@ -1063,7 +1063,7 @@ document.getElementById('cForm').addEventListener('submit',async function(e){
   var formId=(form.getAttribute('data-formspree-id')||'').trim();
   if(!formId||formId==='YOUR_FORMSPREE_ID'){
     msgEl.className='fmsg err';
-    msgEl.textContent='Form not configured. Add your Formspree form ID to the form (data-formspree-id). Get one free at formspree.io';
+    msgEl.textContent='Form not set up yet. Get a free form ID at formspree.io → Dashboard → New form → copy the ID (e.g. mzbqpkzw). In index.html line ~900, replace YOUR_FORMSPREE_ID with that ID.';
     return;
   }
   msgEl.className='';
