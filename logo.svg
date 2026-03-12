@@ -1,25 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" aria-hidden="true">
   <defs>
-    <!-- Inner circle: dark fill + grid -->
+    <!-- Inner circle: dark fill + grid (site charcoal) -->
     <pattern id="grid" width="12" height="12" patternUnits="userSpaceOnUse">
-      <path d="M 12 0 L 0 0 0 12" fill="none" stroke="#334155" stroke-width="0.4" opacity="0.6"/>
+      <path d="M 12 0 L 0 0 0 12" fill="none" stroke="#404040" stroke-width="0.4" opacity="0.7"/>
     </pattern>
-    <!-- Outer ring mask for dots -->
     <circle id="innerCircle" cx="60" cy="60" r="44"/>
   </defs>
-  <!-- Outer ring (light blue) -->
-  <circle cx="60" cy="60" r="52" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
-  <!-- Four orbital dots -->
-  <circle cx="60" cy="8" r="3.5" fill="#3b82f6"/>
-  <circle cx="112" cy="60" r="3.5" fill="#3b82f6"/>
-  <circle cx="60" cy="112" r="3.5" fill="#3b82f6"/>
-  <circle cx="8" cy="60" r="3.5" fill="#3b82f6"/>
-  <!-- Inner circle: dark with grid -->
-  <circle cx="60" cy="60" r="44" fill="#111827"/>
+  <!-- Outer ring — primary orange -->
+  <circle cx="60" cy="60" r="52" fill="none" stroke="#f97316" stroke-width="1.8"/>
+  <!-- Four orbital dots — orange -->
+  <circle cx="60" cy="8" r="3.5" fill="#f97316"/>
+  <circle cx="112" cy="60" r="3.5" fill="#fb923c"/>
+  <circle cx="60" cy="112" r="3.5" fill="#f97316"/>
+  <circle cx="8" cy="60" r="3.5" fill="#fb923c"/>
+  <!-- Inner circle: charcoal with grid -->
+  <circle cx="60" cy="60" r="44" fill="#141414"/>
   <circle cx="60" cy="60" r="44" fill="url(#grid)"/>
-  <circle cx="60" cy="60" r="44" fill="none" stroke="#1e293b" stroke-width="1.2"/>
-  <!-- Geometric AK: outline style -->
-  <g fill="none" stroke="#f1f5f9" stroke-width="2.8" stroke-linecap="square" stroke-linejoin="miter">
+  <circle cx="60" cy="60" r="44" fill="none" stroke="#2a2a2a" stroke-width="1.2"/>
+  <!-- Geometric AK — light text -->
+  <g fill="none" stroke="#fafafa" stroke-width="2.8" stroke-linecap="square" stroke-linejoin="miter">
     <!-- A: left leg, peak, right leg, crossbar -->
     <path d="M 28 76 L 28 44 L 42 44 L 56 44 L 56 76 M 32 54 L 52 54"/>
     <!-- K: stem, upper and lower arms -->
